@@ -12,7 +12,15 @@
     "description": "Read a book"
   },
   {
-    "id": 6,
-    "description": "Call mom"
+    "id": 7,
+    "description": "Pet a kitten"
+  },
+  {
+    "id": 8,
+    "description": "{boo}"
+  },
+  {
+    "id": 9,
+    "description": "\" thing"
   }
 ]

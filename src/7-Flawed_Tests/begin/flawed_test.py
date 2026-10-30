@@ -15,7 +15,7 @@ STANDARD_SHIPPING_COST = 6.99
 
 def shipping_cost(order_total):
 	"""Return the shipping charge for an order total in dollars."""
-	if order_total > FREE_SHIPPING_THRESHOLD:
+	if order_total >= FREE_SHIPPING_THRESHOLD:
 		return 0.00
 	return STANDARD_SHIPPING_COST
 
@@ -38,6 +38,11 @@ class ShippingQuoteTests(unittest.TestCase):
 
 	def test_large_order_gets_free_shipping(self):
 		quote = order_summary([("backpack", 65.00)])
+		
+		self.assertEqual(quote["shipping"], 0.00)
+
+	def test_threshold_order_gets_free_shipping(self):
+		quote = order_summary([("headphones", 50.00)])
 		
 		self.assertEqual(quote["shipping"], 0.00)
 

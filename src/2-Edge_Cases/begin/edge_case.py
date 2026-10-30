@@ -23,6 +23,13 @@ def save_tasks(tasks):
 		json.dump(tasks, file, indent=2)
 
 
+def read_input(prompt):
+	try:
+		return input(prompt).strip()
+	except EOFError:
+		return ""
+
+
 def next_id(tasks):
 	ids = [task.get("id", 0) for task in tasks if isinstance(task, dict)]
 	return max(ids, default=0) + 1
@@ -42,12 +49,12 @@ def main():
 
 	while True:
 		print("\n1. View tasks\n2. Add task\n3. Remove task\n4. Quit")
-		choice = input("Choose an option: ").strip()
+		choice = read_input("Choose an option: ")
 
 		if choice == "1":
 			display_tasks(tasks)
 		elif choice == "2":
-			description = input("Enter a task: ").strip()
+			description = read_input("Enter a task: ")
 			if description:
 				tasks.append({"id": next_id(tasks), "description": description})
 				save_tasks(tasks)
@@ -56,7 +63,7 @@ def main():
 				print("Task cannot be empty.")
 		elif choice == "3":
 			try:
-				task_id = int(input("Enter the task ID to remove: ").strip())
+				task_id = int(read_input("Enter the task ID to remove: "))
 			except ValueError:
 				print("Invalid ID.")
 				continue

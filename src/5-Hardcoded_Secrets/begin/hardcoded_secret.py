@@ -6,14 +6,27 @@ account. GitHub does not support using an account password for API login.
 
 import base64
 import json
+import os
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 
-# Replace these placeholders with your own values.
-GITHUB_USERNAME = "your-github-username"
-GITHUB_TOKEN = "your-github-personal-access-token"
 GITHUB_USER_ENDPOINT = "https://api.github.com/user"
+
+
+def get_github_credentials() -> tuple[str, str]:
+	"""Load the GitHub username and token from environment variables."""
+	username = os.environ.get("GITHUB_USERNAME")
+	token = os.environ.get("GITHUB_TOKEN")
+	if not username:
+		raise RuntimeError(
+			"Missing GITHUB_USERNAME. Set it in your environment before running this script."
+		)
+	if not token:
+		raise RuntimeError(
+			"Missing GITHUB_TOKEN. Set it in your environment before running this script."
+		)
+	return username, token
 
 
 def login_to_github(username: str, token: str) -> dict:
@@ -41,5 +54,6 @@ def login_to_github(username: str, token: str) -> dict:
 
 
 if __name__ == "__main__":
-	profile = login_to_github(GITHUB_USERNAME, GITHUB_TOKEN)
+	username, token = get_github_credentials()
+	profile = login_to_github(username, token)
 	print(f"Logged in to GitHub as {profile['login']}.")

@@ -68,7 +68,7 @@ def save_expenses(expenses, database):
 			"CREATE TABLE IF NOT EXISTS expenses "
 			"(description TEXT NOT NULL, amount REAL NOT NULL)"
 		)
-		connection.execute_many(
+		connection.executemany(
 			"INSERT INTO expenses (description, amount) VALUES (?, ?)",
 			expenses,
 		)
